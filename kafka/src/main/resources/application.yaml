@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: kafka
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:FREE
+    username: c##hieu
+    password: hieu
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.OracleDialect
+
+  kafka:
+    bootstrap-servers: localhost:9092, localhost:9093, localhost:9094
+    admin:
+      fail-fast: false
+      properties:
+        request.timeout.ms: 50000
+        retry.backoff.ms: 1000
+
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: -1
+      retries: 3
+      properties:
+        enable.idempotence: true
+        max.in.flight.requests.per.connection: 5
+
